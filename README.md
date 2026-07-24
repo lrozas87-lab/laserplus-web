@@ -1,12 +1,14 @@
-# Laser Plus V6 Premium
+# Laser Plus V6 Premium Mejorada
 
-Actualización de la web con una sección de precios completamente rediseñada.
+Versión enfocada en conversión y claridad comercial.
 
-## Principales cambios
-- Tratamientos favoritos presentados en tarjetas premium.
-- Beneficios de 2, 3 y 4 o más zonas con diseño visual destacado.
-- Ejemplos de ahorro simples y claros.
-- Botón de cotización personalizada por WhatsApp.
-- Diseño adaptable a computador y celular.
+## Cambios principales
+- Se muestran solo las zonas más solicitadas.
+- Se eliminó el tarifario completo de la web.
+- Beneficios por 2, 3 y 4 o más zonas en tarjetas premium.
+- Tres ejemplos de ahorro claros.
+- Botón directo para cotizar otras zonas por WhatsApp.
+- Diseño responsive para computador y celular.
 
-Subir todo el contenido de esta carpeta a la raíz del repositorio `laserplus-web`.
+## Publicación
+Subir todo el contenido de esta carpeta a la raíz del repositorio GitHub y confirmar el commit en la rama `main`.
