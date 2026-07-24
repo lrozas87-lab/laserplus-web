@@ -1,13 +1,19 @@
-# Laser Plus V4.2 Premium
-Sitio estático listo para GitHub + Cloudflare Pages.
+# Laser Plus Web V5 Premium
 
-## Cambios de esta versión
-- Se elimina la mención a "36 reseñas".
-- Se incorpora "Miles de pacientes nos avalan".
-- Se actualizan textos de trayectoria y confianza.
-- Se actualiza la descripción SEO para destacar experiencia y pacientes atendidos.
+Sitio estático listo para GitHub Pages / Cloudflare Pages.
+
+## Cambios principales
+
+- Nueva sección “Zonas más solicitadas”.
+- Valores por sesión con IVA incluido.
+- Beneficio permanente por cantidad de zonas:
+  - 2 zonas: 10% de descuento.
+  - 3 zonas: 15% de descuento.
+  - 4 o más zonas: 20% de descuento.
+- Ejemplos de combinaciones para mujer y hombre.
+- Botón de WhatsApp para consultar otras zonas.
+- Diseño adaptable a celulares y computadores.
 
 ## Publicación
-Sube **el contenido de esta carpeta** a la raíz del repositorio `laserplus-web`, reemplazando los archivos anteriores. Cloudflare Pages desplegará automáticamente.
 
-No requiere comando de compilación ni directorio de salida.
+Reemplazar en el repositorio los archivos y carpetas actuales por todo el contenido de esta carpeta, manteniendo la estructura.
