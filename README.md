@@ -1,14 +1,6 @@
-# Laser Plus V6 Premium Mejorada
+# Laser Plus V7 Premium
 
-Versión enfocada en conversión y claridad comercial.
-
-## Cambios principales
-- Se muestran solo las zonas más solicitadas.
-- Se eliminó el tarifario completo de la web.
-- Beneficios por 2, 3 y 4 o más zonas en tarjetas premium.
-- Tres ejemplos de ahorro claros.
-- Botón directo para cotizar otras zonas por WhatsApp.
-- Diseño responsive para computador y celular.
+Versión funcional con rediseño real de la sección de precios, logo oficial suministrado por Laser Plus y archivo CSS con nombre nuevo para evitar que el navegador conserve estilos antiguos en caché.
 
 ## Publicación
-Subir todo el contenido de esta carpeta a la raíz del repositorio GitHub y confirmar el commit en la rama `main`.
+Subir todo el contenido de esta carpeta a la raíz del repositorio y confirmar los cambios en la rama `main`.
