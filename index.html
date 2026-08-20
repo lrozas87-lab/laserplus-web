@@ -81,7 +81,13 @@
 
 <section class="section dark" id="tecnologia">
   <div class="shell tech">
-    <div class="photo reveal"><img src="/assets/img/tratamiento.webp" alt="Tratamiento de depilación láser en Laser Plus" loading="lazy"></div>
+    <div class="photo reveal video-treatment-wrap">
+      <video id="videoAlexandrita" class="video-treatment" autoplay muted loop playsinline preload="metadata" poster="/assets/img/tratamiento.webp" aria-label="Tratamiento real con láser Alexandrita en Laser Plus">
+        <source src="/assets/tratamiento-alexandrita.mp4" type="video/mp4">
+        Tu navegador no puede reproducir este video.
+      </video>
+      <button type="button" class="video-sound-btn" id="videoSoundBtn" aria-pressed="false" aria-label="Activar sonido del video">🔊 Activar sonido</button>
+    </div>
     <div class="reveal">
       <p class="kicker">TECNOLOGÍA ALEXANDRITA</p>
       <h2>Precisión y rapidez en manos profesionales.</h2>
@@ -228,5 +234,27 @@
 </footer>
 <a class="wa" href="https://wa.me/56940701037?text=Hola%20Laser%20Plus,%20quisiera%20más%20información." target="_blank" rel="noopener" aria-label="WhatsApp">WA</a>
 <dialog><button aria-label="Cerrar">×</button><img alt="Imagen ampliada"></dialog>
+
+  <style>
+    .video-treatment-wrap{position:relative;overflow:hidden;border-radius:22px;background:#0d0b08;box-shadow:0 22px 60px rgba(0,0,0,.28)}
+    .video-treatment{display:block;width:100%;height:100%;min-height:520px;object-fit:cover;background:#0d0b08}
+    .video-sound-btn{position:absolute;left:20px;bottom:20px;z-index:3;border:1px solid rgba(214,170,84,.75);background:rgba(13,11,8,.82);color:#fff;padding:12px 18px;border-radius:999px;font:600 14px/1 Arial,Helvetica,sans-serif;letter-spacing:.02em;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 8px 28px rgba(0,0,0,.28);transition:.2s ease}
+    .video-sound-btn:hover{background:#c99532;color:#111;transform:translateY(-1px)}
+    @media(max-width:900px){.video-treatment{min-height:0;aspect-ratio:9/16}.video-sound-btn{left:14px;bottom:14px;padding:11px 15px;font-size:13px}}
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded',function(){
+      const video=document.getElementById('videoAlexandrita');
+      const btn=document.getElementById('videoSoundBtn');
+      if(!video||!btn)return;
+      btn.addEventListener('click',async function(){
+        video.muted=!video.muted;
+        btn.setAttribute('aria-pressed',String(!video.muted));
+        btn.textContent=video.muted?'🔊 Activar sonido':'🔇 Silenciar';
+        if(video.paused){try{await video.play()}catch(e){}}
+      });
+    });
+  </script>
+
 </body>
 </html>
