@@ -87,6 +87,7 @@
         Tu navegador no puede reproducir este video.
       </video>
       <button type="button" class="video-sound-btn" id="videoSoundBtn" aria-pressed="false" aria-label="Activar sonido del video">🔊 Activar sonido</button>
+      <button type="button" class="video-play-btn" id="videoPlayBtn" aria-label="Reproducir video">▶ Reproducir</button>
     </div>
     <div class="reveal">
       <p class="kicker">TECNOLOGÍA ALEXANDRITA</p>
@@ -240,37 +241,67 @@
     .video-treatment{display:block;width:100%;height:100%;min-height:520px;object-fit:cover;background:#0d0b08}
     .video-sound-btn{position:absolute;left:20px;bottom:20px;z-index:3;border:1px solid rgba(214,170,84,.75);background:rgba(13,11,8,.82);color:#fff;padding:12px 18px;border-radius:999px;font:600 14px/1 Arial,Helvetica,sans-serif;letter-spacing:.02em;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 8px 28px rgba(0,0,0,.28);transition:.2s ease}
     .video-sound-btn:hover{background:#c99532;color:#111;transform:translateY(-1px)}
+    .video-play-btn{position:absolute;inset:50% auto auto 50%;transform:translate(-50%,-50%);z-index:4;border:1px solid rgba(214,170,84,.85);background:rgba(13,11,8,.88);color:#fff;padding:14px 22px;border-radius:999px;font:700 14px/1 Arial,Helvetica,sans-serif;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 10px 30px rgba(0,0,0,.35);display:none}
+    .video-play-btn.show{display:block}
     @media(max-width:900px){.video-treatment{min-height:0;aspect-ratio:9/16}.video-sound-btn{left:14px;bottom:14px;padding:11px 15px;font-size:13px}}
   </style>
   <script>
     document.addEventListener('DOMContentLoaded',function(){
       const video=document.getElementById('videoAlexandrita');
-      const btn=document.getElementById('videoSoundBtn');
-      if(!video||!btn)return;
+      const soundBtn=document.getElementById('videoSoundBtn');
+      const playBtn=document.getElementById('videoPlayBtn');
+      if(!video||!soundBtn||!playBtn)return;
 
       video.muted=true;
       video.defaultMuted=true;
       video.playsInline=true;
 
-      const iniciarVideo=async()=>{
+      const tryPlay=async()=>{
         try{
           await video.play();
+          playBtn.classList.remove('show');
+          return true;
         }catch(e){
-          // Algunos navegadores esperan a que el video tenga datos suficientes.
+          playBtn.classList.add('show');
+          return false;
         }
       };
 
-      iniciarVideo();
-      video.addEventListener('loadeddata',iniciarVideo,{once:true});
-      video.addEventListener('canplay',iniciarVideo,{once:true});
-      window.addEventListener('pageshow',iniciarVideo);
-      document.addEventListener('visibilitychange',()=>{if(!document.hidden) iniciarVideo();});
+      // Intento inicial y reintentos cuando el navegador ya tiene datos.
+      tryPlay();
+      video.addEventListener('loadedmetadata',tryPlay,{once:true});
+      video.addEventListener('loadeddata',tryPlay,{once:true});
+      video.addEventListener('canplay',tryPlay,{once:true});
 
-      btn.addEventListener('click',async function(){
+      // Cuando el video entra en pantalla, volver a intentar reproducirlo.
+      if('IntersectionObserver' in window){
+        const obs=new IntersectionObserver((entries)=>{
+          entries.forEach(entry=>{
+            if(entry.isIntersecting){ tryPlay(); }
+            else if(!video.paused){ video.pause(); }
+          });
+        },{threshold:0.25});
+        obs.observe(video);
+      }
+
+      // Algunos navegadores bloquean autoplay hasta la primera interacción del usuario.
+      const resumeOnInteraction=()=>{ tryPlay(); };
+      ['click','touchstart','scroll','keydown'].forEach(evt=>
+        window.addEventListener(evt,resumeOnInteraction,{once:true,passive:true})
+      );
+
+      playBtn.addEventListener('click',async function(){
+        video.muted=true;
+        soundBtn.textContent='🔊 Activar sonido';
+        soundBtn.setAttribute('aria-pressed','false');
+        await tryPlay();
+      });
+
+      soundBtn.addEventListener('click',async function(){
+        if(video.paused){ await tryPlay(); }
         video.muted=!video.muted;
-        btn.setAttribute('aria-pressed',String(!video.muted));
-        btn.textContent=video.muted?'🔊 Activar sonido':'🔇 Silenciar';
-        if(video.paused){try{await video.play()}catch(e){}}
+        soundBtn.setAttribute('aria-pressed',String(!video.muted));
+        soundBtn.textContent=video.muted?'🔊 Activar sonido':'🔇 Silenciar';
       });
     });
   </script>
