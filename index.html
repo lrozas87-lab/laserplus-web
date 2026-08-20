@@ -82,7 +82,7 @@
 <section class="section dark" id="tecnologia">
   <div class="shell tech">
     <div class="photo reveal video-treatment-wrap">
-      <video id="videoAlexandrita" class="video-treatment" autoplay muted loop playsinline preload="metadata" poster="/assets/img/tratamiento.webp" aria-label="Tratamiento real con láser Alexandrita en Laser Plus">
+      <video id="videoAlexandrita" class="video-treatment" autoplay muted loop playsinline preload="auto" poster="/assets/img/tratamiento.webp" aria-label="Tratamiento real con láser Alexandrita en Laser Plus">
         <source src="/assets/tratamiento-alexandrita.mp4" type="video/mp4">
         Tu navegador no puede reproducir este video.
       </video>
@@ -247,6 +247,25 @@
       const video=document.getElementById('videoAlexandrita');
       const btn=document.getElementById('videoSoundBtn');
       if(!video||!btn)return;
+
+      video.muted=true;
+      video.defaultMuted=true;
+      video.playsInline=true;
+
+      const iniciarVideo=async()=>{
+        try{
+          await video.play();
+        }catch(e){
+          // Algunos navegadores esperan a que el video tenga datos suficientes.
+        }
+      };
+
+      iniciarVideo();
+      video.addEventListener('loadeddata',iniciarVideo,{once:true});
+      video.addEventListener('canplay',iniciarVideo,{once:true});
+      window.addEventListener('pageshow',iniciarVideo);
+      document.addEventListener('visibilitychange',()=>{if(!document.hidden) iniciarVideo();});
+
       btn.addEventListener('click',async function(){
         video.muted=!video.muted;
         btn.setAttribute('aria-pressed',String(!video.muted));
