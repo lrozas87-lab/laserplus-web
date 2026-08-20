@@ -29,6 +29,10 @@
 
   gtag('config', 'G-PZC9WCFNVD');
 </script>
+
+  <style>
+    @media(max-width:900px){#videoAlexandrita{min-height:0!important;aspect-ratio:9/16}}
+  </style>
 </head>
 <body>
 <a class="skip" href="#contenido">Saltar al contenido</a>
@@ -81,13 +85,11 @@
 
 <section class="section dark" id="tecnologia">
   <div class="shell tech">
-    <div class="photo reveal video-treatment-wrap">
-      <video id="videoAlexandrita" class="video-treatment" autoplay muted loop playsinline preload="auto" poster="/assets/img/tratamiento.webp" aria-label="Tratamiento real con láser Alexandrita en Laser Plus">
+    <div class="photo reveal" style="overflow:hidden;border-radius:22px;background:#0d0b08;box-shadow:0 22px 60px rgba(0,0,0,.28)">
+      <video id="videoAlexandrita" controls autoplay muted loop playsinline preload="metadata" poster="/assets/img/tratamiento.webp" style="display:block;width:100%;height:100%;min-height:520px;object-fit:cover;background:#0d0b08" aria-label="Tratamiento real con láser Alexandrita en Laser Plus">
         <source src="/assets/tratamiento-alexandrita.mp4" type="video/mp4">
         Tu navegador no puede reproducir este video.
       </video>
-      <button type="button" class="video-sound-btn" id="videoSoundBtn" aria-pressed="false" aria-label="Activar sonido del video">🔊 Activar sonido</button>
-      <button type="button" class="video-play-btn" id="videoPlayBtn" aria-label="Reproducir video">▶ Reproducir</button>
     </div>
     <div class="reveal">
       <p class="kicker">TECNOLOGÍA ALEXANDRITA</p>
@@ -235,76 +237,5 @@
 </footer>
 <a class="wa" href="https://wa.me/56940701037?text=Hola%20Laser%20Plus,%20quisiera%20más%20información." target="_blank" rel="noopener" aria-label="WhatsApp">WA</a>
 <dialog><button aria-label="Cerrar">×</button><img alt="Imagen ampliada"></dialog>
-
-  <style>
-    .video-treatment-wrap{position:relative;overflow:hidden;border-radius:22px;background:#0d0b08;box-shadow:0 22px 60px rgba(0,0,0,.28)}
-    .video-treatment{display:block;width:100%;height:100%;min-height:520px;object-fit:cover;background:#0d0b08}
-    .video-sound-btn{position:absolute;left:20px;bottom:20px;z-index:3;border:1px solid rgba(214,170,84,.75);background:rgba(13,11,8,.82);color:#fff;padding:12px 18px;border-radius:999px;font:600 14px/1 Arial,Helvetica,sans-serif;letter-spacing:.02em;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 8px 28px rgba(0,0,0,.28);transition:.2s ease}
-    .video-sound-btn:hover{background:#c99532;color:#111;transform:translateY(-1px)}
-    .video-play-btn{position:absolute;inset:50% auto auto 50%;transform:translate(-50%,-50%);z-index:4;border:1px solid rgba(214,170,84,.85);background:rgba(13,11,8,.88);color:#fff;padding:14px 22px;border-radius:999px;font:700 14px/1 Arial,Helvetica,sans-serif;cursor:pointer;backdrop-filter:blur(8px);box-shadow:0 10px 30px rgba(0,0,0,.35);display:none}
-    .video-play-btn.show{display:block}
-    @media(max-width:900px){.video-treatment{min-height:0;aspect-ratio:9/16}.video-sound-btn{left:14px;bottom:14px;padding:11px 15px;font-size:13px}}
-  </style>
-  <script>
-    document.addEventListener('DOMContentLoaded',function(){
-      const video=document.getElementById('videoAlexandrita');
-      const soundBtn=document.getElementById('videoSoundBtn');
-      const playBtn=document.getElementById('videoPlayBtn');
-      if(!video||!soundBtn||!playBtn)return;
-
-      video.muted=true;
-      video.defaultMuted=true;
-      video.playsInline=true;
-
-      const tryPlay=async()=>{
-        try{
-          await video.play();
-          playBtn.classList.remove('show');
-          return true;
-        }catch(e){
-          playBtn.classList.add('show');
-          return false;
-        }
-      };
-
-      // Intento inicial y reintentos cuando el navegador ya tiene datos.
-      tryPlay();
-      video.addEventListener('loadedmetadata',tryPlay,{once:true});
-      video.addEventListener('loadeddata',tryPlay,{once:true});
-      video.addEventListener('canplay',tryPlay,{once:true});
-
-      // Cuando el video entra en pantalla, volver a intentar reproducirlo.
-      if('IntersectionObserver' in window){
-        const obs=new IntersectionObserver((entries)=>{
-          entries.forEach(entry=>{
-            if(entry.isIntersecting){ tryPlay(); }
-            else if(!video.paused){ video.pause(); }
-          });
-        },{threshold:0.25});
-        obs.observe(video);
-      }
-
-      // Algunos navegadores bloquean autoplay hasta la primera interacción del usuario.
-      const resumeOnInteraction=()=>{ tryPlay(); };
-      ['click','touchstart','scroll','keydown'].forEach(evt=>
-        window.addEventListener(evt,resumeOnInteraction,{once:true,passive:true})
-      );
-
-      playBtn.addEventListener('click',async function(){
-        video.muted=true;
-        soundBtn.textContent='🔊 Activar sonido';
-        soundBtn.setAttribute('aria-pressed','false');
-        await tryPlay();
-      });
-
-      soundBtn.addEventListener('click',async function(){
-        if(video.paused){ await tryPlay(); }
-        video.muted=!video.muted;
-        soundBtn.setAttribute('aria-pressed',String(!video.muted));
-        soundBtn.textContent=video.muted?'🔊 Activar sonido':'🔇 Silenciar';
-      });
-    });
-  </script>
-
 </body>
 </html>
